@@ -1,0 +1,12 @@
+[.circle] Player info is needed
+  Print player info instructional message
+    [prompt] Prompt to get name
+      [.diamond] Has the name been used before
+        Yes: [error] Display error message
+          (prompt)
+        No: [.diamond] Is the the name an empty string
+          Yes: (error)
+          No: Add name to "players" variable
+            [.diamond] Have all three players entered distinct names?
+              No: (prompt)
+              Yes: [.circle] End player info request inquiry

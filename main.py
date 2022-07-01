@@ -7,7 +7,7 @@ from config import roundstatusloc
 from config import finalprize
 from config import finalRoundTextLoc
 
-import random as r
+import random
 
 players={0:{"roundtotal":0,"gametotal":0,"name":""},
          1:{"roundtotal":0,"gametotal":0,"name":""},
@@ -43,7 +43,6 @@ def readDictionaryFile():
     # Set dictionary to words list
     dictionary = words 
       
-    
 def readTurnTxtFile():
     global turntext   
     #read in turn intial turn status "message" from file
@@ -60,10 +59,43 @@ def readRoundStatusTxtFile():
 def readWheelTxtFile():
     global wheellist
     # read the Wheel name from input using the Config wheelloc file location 
-    
+
+# getPlayerInfo: command line prompt will inquiry repetitiously until three valid, unique names are entered
 def getPlayerInfo():
     global players
-    # read in player names from command prompt input
+    
+    # Prompt players to give their names
+    print("<>-<>-<>-<>-<>-<>-<>-<>-<>-<>-<>-<>-<>-<>-<>-<>-<>-<>-<>-<>\n")
+    print("We are now going to meet our constestants!\n")
+
+    # Keep going until all three players names are received
+    # Rules are very loose, only no repeat names and no blanks
+    all_names_filled = False
+    i = 0
+    players_temp = [] # Makes easier to see if name is already taken
+    while (not all_names_filled):
+
+        # Get player's name
+        print(f'Player {i + 1}, please enter your name!')
+        name = input(f'  Player {i + 1}\'s name: ')
+
+        # If name has already been used show message
+        if (name in players_temp):
+            print(f'  "{name}" has already been taken. Please enter a different name!')
+        elif (name.strip() == ''):
+            print('  Please enter a name with at least one character!')
+        else:
+            print(f'  Welcome, {name}!')
+            players[i]['name'] = name
+            players_temp.append(name)
+            i += 1
+
+            # Check to see if all players are in; if so, don't prompt for more names
+            if (i == 3):
+                print()
+                print('Looks like all the players are here!\n')
+                all_names_filled = True
+        print()
 
 
 def gameSetup():
@@ -91,7 +123,7 @@ def getWord():
     while (not new_word_found):
 
         # Get a random index from the dictionary
-        i = r.randint(0, len(dictionary))
+        i = random.randint(0, len(dictionary))
 
         # Check to see if already used
         if (i not in usedIndices):
@@ -241,6 +273,11 @@ def main2():
             wofRound()
         else:
             wofFinalRound()
+
+def main():
+    global players
+    getPlayerInfo()
+    print(players)
 
 if __name__ == "__main__":
     main()
