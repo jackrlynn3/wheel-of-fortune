@@ -1,0 +1,2 @@
+REFERENCES:
+(1) 1000+ nouns list used for dictionary: https://github.com/hugsy/stuff/blob/main/random-word/english-nouns.txt

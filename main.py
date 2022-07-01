@@ -7,7 +7,7 @@ from config import roundstatusloc
 from config import finalprize
 from config import finalRoundTextLoc
 
-import random
+import random as r
 
 players={0:{"roundtotal":0,"gametotal":0,"name":""},
          1:{"roundtotal":0,"gametotal":0,"name":""},
@@ -23,12 +23,25 @@ blankWord = []
 vowels = {"a", "e", "i", "o", "u"}
 roundstatus = ""
 finalroundtext = ""
+usedIndices = []
 
-
+# readDictionaryFile: reads in file saved as data/dictionary.txt and saves it as
+#   as a list of formatted strings in the dictionary global variable
 def readDictionaryFile():
+
+    # Get global dictionary variable
     global dictionary
-    # Read dictionary file in from dictionary file location
-    # Store each word in a list.
+
+    # Open file
+    f = open(dictionaryloc, 'r')
+
+    # Make sure each line is properly formatted
+    words = f.readlines()
+    for i in range(len(words)):
+        words[i] = str(words[i]).strip().lower()
+
+    # Set dictionary to words list
+    dictionary = words 
       
     
 def readTurnTxtFile():
@@ -65,11 +78,34 @@ def gameSetup():
     getPlayerInfo()
     readRoundStatusTxtFile()
     readFinalRoundTxtFile() 
-    
+
+# getWord: choose a random word that has not been used by game to be the next round
 def getWord():
+
+    # Get global variables
     global dictionary
-    #choose random word from dictionary
-    #make a list of the word with underscores instead of letters.
+    global usedIndices
+    
+    # Keep going until new word is found
+    new_word_found = False
+    while (not new_word_found):
+
+        # Get a random index from the dictionary
+        i = r.randint(0, len(dictionary))
+
+        # Check to see if already used
+        if (i not in usedIndices):
+            new_word_found = True
+    
+    # Get the round word
+    roundWord = dictionary[i]
+
+    # Convert the round word into underscore version
+    roundUnderscoreWord = []
+    for i in range(len(roundWord)):
+        roundUnderscoreWord.append('_')
+
+    # Return word and underscored version
     return roundWord,roundUnderscoreWord
 
 def wofRoundSetup():
@@ -197,7 +233,7 @@ def wofFinalRound():
     # If they do, add finalprize and gametotal and print out that the player won 
 
 
-def main():
+def main2():
     gameSetup()    
 
     for i in range(0,maxrounds):
