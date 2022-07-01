@@ -1,2 +1,11 @@
-Add your text here and use string.format or string.format_map
-with {variables} to template strings
+<>-<>-<>-<>-<>-<>-<>-<>-<>-<>-<>-<>-<>-<>-<>-<>-<>-<>-<>-<>
+
+ROUND {round_num}:
+
+{format_word}
+
+Player 1: ${p1_money}
+Player 2: ${p2_money}
+Player 3: ${p3_money}
+
+What would you like to do for your turn?

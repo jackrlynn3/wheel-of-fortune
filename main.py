@@ -42,10 +42,19 @@ def readDictionaryFile():
 
     # Set dictionary to words list
     dictionary = words 
-      
+
+# readTurnTxtFile: reads in file saved as data/turntext.txt as string and saves
+#   it under turntext global variable
 def readTurnTxtFile():
+
+    # Load in global turntext variable
     global turntext   
-    #read in turn intial turn status "message" from file
+
+    # Load in corresponding text file (data/turntext.txt)
+    f = open('data/turntext.txt', 'r')
+
+    # Save string as turntext variable
+    turntext = f.read()
 
         
 def readFinalRoundTxtFile():
@@ -275,9 +284,9 @@ def main2():
             wofFinalRound()
 
 def main():
-    global players
-    getPlayerInfo()
-    print(players)
+    global turntext
+    readTurnTxtFile()
+    print(turntext)
 
 if __name__ == "__main__":
     main()
