@@ -1,11 +1,17 @@
 <>-<>-<>-<>-<>-<>-<>-<>-<>-<>-<>-<>-<>-<>-<>-<>-<>-<>-<>-<>
 
-ROUND {round_num}:
-
+ KEYWORD
+---------
 {format_word}
 
-Player 1: ${p1_money}
-Player 2: ${p2_money}
-Player 3: ${p3_money}
+ GAME STATS
+------------
+{p1_name}: ${p1_money}
+{p2_name}: ${p2_money}
+{p3_name}: ${p3_money}
+
+ CURRENT TURN
+--------------
+{curr_player}'s turn:
 
 What would you like to do for your turn?
