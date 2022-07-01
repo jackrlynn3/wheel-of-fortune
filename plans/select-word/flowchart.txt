@@ -1,0 +1,7 @@
+[.circle] Game needs a keyword
+  [pick] Pick a random number as index in dicitonary
+    [.diamond] Has that index been used before?
+      Yes: (pick)
+      No: Get keyword from 'dictionary' variable
+        Create a list filled with "_" to represent the unknown characters
+          [.circle] Return keyword and formatted underscore list
