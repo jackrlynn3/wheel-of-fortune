@@ -146,16 +146,26 @@ def getPlayerInfo():
                 all_names_filled = True
         print()
 
+# gameSetup: loads in all game files, introduces the game, and calls command to get player's names
 def gameSetup():
-    # Read in File dictionary
-    # Read in Turn Text Files
+
+    # Welcome text
+    print("<>-<>-<>-<>-<>-<>-<>-<>-<>-<>-<>-<>-<>-<>-<>-<>-<>-<>-<>-<>\n")
+    print("Welcome to the Wheel of Fortune, America's Game!\n")
+    
+    # Load in global files
     global turntext
     global dictionary
-        
+    
+    # File read functions (1)
     readDictionaryFile()
     readTurnTxtFile()
     readWheelTxtFile()
+
+    # Get player information
     getPlayerInfo()
+
+    # File read functions (2)
     readRoundStatusTxtFile()
     readFinalRoundTxtFile() 
 
@@ -212,7 +222,12 @@ def wofRoundSetup():
 
     return initPlayer
 
+# spinWheel: spin the wheel and handle appropriately, such as BANKRUPT and guess letter
+#   playerNum: (int) player who is currently playing
+#   return: (bool) False if turn is now over; True if turn is still going
 def spinWheel(playerNum):
+
+    # Get global variables
     global wheellist
     global players
     global vowels
@@ -282,7 +297,12 @@ def spinWheel(playerNum):
     # Change player round total if they guess right.     
     return stillinTurn
 
-def guessletter(letter): 
+# spinWheel: guess letter to compare against keyword
+#   letter: (str) string of 1-length player is attempting to guess
+#   return: (1) (bool) True if letter is in word; False otherwise; (2) (int) count of letter in keyword
+def guessletter(letter):
+
+    # Get global variables 
     global players
     global blankWord
     global roundWord
@@ -306,7 +326,12 @@ def guessletter(letter):
     # Return if the letter is in the word and the count
     return goodGuess, count
 
+# buyVowel: guess a vowel in the keyword
+#   playerNum: (int) player who is currently playing
+#   return: (bool) False if turn is now over; True if turn is still going
 def buyVowel(playerNum):
+
+    # Get global variables
     global players
     global vowels
     
@@ -351,8 +376,12 @@ def buyVowel(playerNum):
 
     # Change player round total if they guess right.     
     return stillinTurn      
-        
-def guessWord(playerNum):
+
+# guessWord: guess the word against the keyword
+#   return: (bool) always returns False because turn is always over after word guess
+def guessWord():
+
+    # Get global variables
     global players
     global blankWord
     global roundWord
@@ -388,7 +417,10 @@ def guessWord(playerNum):
     
     # Always return False because guessing the word should always end turn
     return False  
-    
+
+# wofTurn: runs a player turn until losing criteria is used
+#   playerNum: (int) player who's turn is being played
+#   return: (bool) False if the round is over (i.e., word is guessed); True if the round should keep going 
 def wofTurn(playerNum):
 
     # Get global variables
@@ -403,8 +435,6 @@ def wofTurn(playerNum):
     # Keep going with player until their is losing condition for round
     stillinTurn = True
     while stillinTurn:
-
-        print("PLAYER NUM: "+str(playerNum))
 
         # Get round status
         print(turntext.format(format_word=' '.join(blankWord), p1_name=players[0]['name'],
@@ -444,7 +474,7 @@ def wofTurn(playerNum):
         elif(choice.strip().upper() == "B" and can_buy_vowel):
             stillinTurn = buyVowel(playerNum)
         elif(choice.upper() == "G"):
-            stillinTurn = guessWord(playerNum)
+            stillinTurn = guessWord()
         else:
             print(f'{choice} is not a valid selection!')
         print()        
@@ -461,6 +491,7 @@ def wofTurn(playerNum):
     else:
         return True  
 
+# wofRound: runs a round of game (except final round)
 def wofRound():
 
     # Get global variables
@@ -473,7 +504,7 @@ def wofRound():
     i_player = wofRoundSetup()
 
     # Debug only: print the word
-    print(f'KEYWORD: {roundWord}')
+    # print(f'KEYWORD: {roundWord}')
     
     # Keep the roudn going until a solution is reached
     round_going = True
@@ -500,6 +531,7 @@ def wofRound():
             input("  OK? ")
             print()
 
+# wofRound: runs a final round of game
 def wofFinalRound():
 
     # Get global variables
