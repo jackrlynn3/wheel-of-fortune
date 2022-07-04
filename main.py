@@ -243,7 +243,7 @@ def spinWheel(playerNum):
         print()
     
     # Use guessletter function to see if guess is in word, and return count
-    stillinTurn, count = guessletter(choice, playerNum)
+    stillinTurn, count = guessletter(choice)
 
     # Change player score
     players[playerNum]['roundtotal'] += count * wheel_val
@@ -263,7 +263,7 @@ def spinWheel(playerNum):
     # Change player round total if they guess right.     
     return stillinTurn
 
-def guessletter(letter, playerNum): 
+def guessletter(letter): 
     global players
     global blankWord
     global roundWord
@@ -313,7 +313,7 @@ def buyVowel(playerNum):
         print()
 
     # Use guessletter function to see if guess is in word, and return count
-    stillinTurn, count = guessletter(choice, playerNum)
+    stillinTurn, count = guessletter(choice)
 
     # Change player score
     players[playerNum]['roundtotal'] -= vowelcost
@@ -344,15 +344,15 @@ def guessWord(playerNum):
     print(f'  Guessed letters: {roundUsedLetters}\n')
 
     # Ask user for letter guess
-    valid_letter = False
+    valid_word = False
     choice = ''
-    while (not valid_letter):
+    while (not valid_word):
         choice = str(input('  Guess: ')).lower()
         if (len(choice) != len(blankWord)):
             print('You must enter a guess that is the same length as the keyword!')
         else:
             print('Good choice!')
-            valid_letter = True
+            valid_word = True
         print()
 
     # If the words match, give it to the player; otherwise, return false
@@ -482,32 +482,112 @@ def wofRound():
             print()
 
 def wofFinalRound():
+
+    # Get global variables
     global roundWord
     global blankWord
     global finalroundtext
+    global roundUsedLetters
     winplayer = 0
-    amount = 0
     
     # Determine who is playing the final round
-    i_winner = 0
     for i in range(1, len(players)):
-        if (players[i]['gametotal'] > players[i_winner]['gametotal']):
-            i_winner = i
+        if (players[i]['gametotal'] > players[winplayer]['gametotal']):
+            winplayer = i
 
     # Print out instructions for that player and who the player is
     print(finalroundtext)
-    print(finalroundtext.format(winner=players[i_winner]['name'], winnings='$'+str(players[i_winner]['gametotal']),
+    print(finalroundtext.format(winner=players[winplayer]['name'], winnings='$'+str(players[winplayer]['gametotal']),
         prize_money='$'+str(finalprize)))
 
     # Use the getWord function to reset the roundWord and the blankWord ( word with the underscores)
-    # Use the guessletter function to check for {'R','S','T','L','N','E'}
-    # Print out the current blankWord with whats in it after applying {'R','S','T','L','N','E'}
-    # Gather 3 consonats and 1 vowel and use the guessletter function to see if they are in the word
-    # Print out the current blankWord again
-    # Remember guessletter should fill in the letters with the positions in blankWord
-    # Get user to guess word
-    # If they do, add finalprize and gametotal and print out that the player won 
+    roundWord, blankWord = getWord()
+    roundUsedLetters = []
+    print(f'Your keyword: {(" ".join(blankWord))}\n')
 
+    # Use the guessletter function to check for {'R','S','T','L','N','E'}
+    given_letters = ['r', 's', 't', 'l', 'n', 'e']
+    for letter in given_letters:
+        guessletter(letter)
+    print(f'Your updated keyword after given letters: {(" ".join(blankWord))}\n')
+
+    # Gather 3 consonats and 1 vowel and use the guessletter function to see if they are in the word
+    guesses = []
+    all_guesses_in = False
+    while (not all_guesses_in):
+
+        # Get the first three consonants
+        if (len(guesses) < 3):
+            choice = str(input('  Input a consonant: ')).lower()
+            if (len(choice) != 1):
+                print('You must enter a character!')
+            elif (choice in roundUsedLetters):
+                print('You must guess letters that haven\'t already been guessed!')
+            elif (choice in vowels):
+                print('You must input a consonant and not a vowel!')
+            elif (not choice.isalpha()):
+                print('You must input a letter!')
+            else:
+                guesses.append(choice)
+            print()
+
+        # Get the only vowel
+        elif (len(guesses) == 3):
+            choice = str(input('  Input a consonant: ')).lower()
+            if (len(choice) != 1):
+                print('You must enter a character!')
+            elif (choice in roundUsedLetters):
+                print('You must guess letters that haven\'t already been guessed!')
+            elif (choice in vowels):
+                guesses.append(choice)
+            else:
+                print('You must input a vowel!')
+            print()
+
+        # End the letter inputs
+        else:
+            all_guesses_in = True
+
+    # Guess the letters
+    for letter in guesses:
+        guessletter(letter)
+
+    # Print out the current blankWord
+    print(f'Your updated keyword after your guesses {guesses}: {(" ".join(blankWord))}\n')
+
+    # Get user to guess word
+    print('You will now be given the opportunity to guess the word once! Good luck!')
+
+    # Ask user for word guess
+    valid_word = False
+    choice = ''
+    while (not valid_word):
+        choice = str(input('  Guess: ')).lower()
+        if (len(choice) != len(blankWord)):
+            print('You must enter a guess that is the same length as the keyword!')
+        else:
+            print('Good choice!')
+            valid_word = True
+        print()
+
+    # If the words match, give it to the player; otherwise, return false
+    if (choice.lower() == roundWord.lower()):
+        for i in range(len(roundWord)):
+            blankWord[i] = roundWord[i]
+        print(f'Your guess of "{choice}" is correct! Good job!\n')
+        players[winplayer]['gametotal'] += finalprize # Add in prize money
+    else:
+        print(f'Your guess of "{choice}" is incorrect. Better luck next time!\n')
+
+    # Print the winner and prize money
+    print(f'{players[winplayer]["name"]}, you have won this game, with total winnings of ${players[winplayer]["gametotal"]}!\n')
+
+    # Pause the line so person can digest what just happened
+    input("  OK? ")
+    print()
+
+    # Print leaving message
+    print('See you again next time during the Wheel of Fortune!\n')
 
 def main():
     gameSetup()    
