@@ -9,24 +9,29 @@ from config import finalRoundTextLoc
 
 import random
 
+# Global Variables
+
+# Players - (dict) Dictionary that holds player attributes, including "roundtotal" (int, the round score for a player),
+#   "gametotal" (int, the total score for a player), and "name" (string, the name of the player)
 players={0:{"roundtotal":0,"gametotal":0,"name":""},
          1:{"roundtotal":0,"gametotal":0,"name":""},
          2:{"roundtotal":0,"gametotal":0,"name":""},
         }
-
-roundNum = 0
-dictionary = []
-turntext = ""
-wheellist = []
-roundWord = ""
-blankWord = []
-vowels = {"a", "e", "i", "o", "u"}
+roundNum = 0 # (int) holds what round the game is on
+dictionary = [] # (list(str)) holds what possible keywords can be used in the game
+turntext = "" # (str) holds text describing the current player's turn information
+wheellist = [] # (list(str)) holds the possible wheel values a player can land on
+roundWord = "" # (str) holds that the keyword the players are trying to guess; formatted
+blankWord = [] # (list(str)) holds the blank version of the keyword that represents the current status of the game
+vowels = {"a", "e", "i", "o", "u"} # (set(str)) all vowels
 consonants = {'b', 'c', 'd', 'f', 'g', 'h', 'j', 'k', 'l', 'm', 'n', 'p',
-    'q', 'r', 's', 't', 'v', 'w', 'x', 'y', 'z'}
-roundstatus = ""
-finalroundtext = ""
-usedIndices = []
-roundUsedLetters = []
+    'q', 'r', 's', 't', 'v', 'w', 'x', 'y', 'z'} # (set(str)) all consonants
+roundstatus = "" # (str) holds the end round summary; formatted
+finalroundtext = "" # (str) holds the final round instructions; formatted
+usedIndices = [] # (list(int)) holds the keyword indices that have already been used
+roundUsedLetters = [] # (list(str)) holds what letters have already been guessed during the round
+
+# Importer Functions
 
 # readDictionaryFile: reads in file saved as data/dictionary.txt and saves it as
 #   as a list of formatted strings in the dictionary global variable
@@ -89,6 +94,8 @@ def readWheelTxtFile():
     wheellist = f.readlines()
     for i in range(len(wheellist)):
         wheellist[i] = wheellist[i].strip()
+
+# Gameplay Functions
 
 # getPlayerInfo: command line prompt will inquiry repetitiously until three valid, unique names are entered
 def getPlayerInfo():
@@ -589,14 +596,21 @@ def wofFinalRound():
     # Print leaving message
     print('See you again next time during the Wheel of Fortune!\n')
 
+# Runner Functions
+
+# main: runner of Wheel of Fortune program; calls for three (toggleable) rounds of play, including the last being special
 def main():
+
+    # Set up game
     gameSetup()    
 
+    # Run all rounds of the game
     for i in range(0,maxrounds):
         if i in [0,1]:
             wofRound()
         else:
-            wofFinalRound()
+            wofFinalRound() # Run final round for last round iteration
 
+# Call main function to run
 if __name__ == "__main__":
     main()
