@@ -115,7 +115,6 @@ def getPlayerInfo():
                 all_names_filled = True
         print()
 
-
 def gameSetup():
     # Read in File dictionary
     # Read in Turn Text Files
@@ -269,7 +268,9 @@ def guessletter(letter, playerNum):
             count += 1
             goodGuess = True
 
-    roundUsedLetters.append(letter)
+    # Add letter to used list
+    if (letter != '_'):
+        roundUsedLetters.append(letter)
 
     # Return if the letter is in the word and the count
     return goodGuess, count
@@ -324,14 +325,38 @@ def guessWord(playerNum):
     global players
     global blankWord
     global roundWord
+    global roundUsedLetters
     
-    # Take in player number
     # Ask for input of the word and check if it is the same as wordguess
-    # Fill in blankList with all letters, instead of underscores if correct 
-    # return False ( to indicate the turn will finish)  
+    print(f'You want to guess the word')
+    print(f'  Guessed letters: {roundUsedLetters}\n')
+
+    # Ask user for letter guess
+    valid_letter = False
+    choice = ''
+    while (not valid_letter):
+        choice = str(input('  Guess: ')).lower()
+        if (len(choice) != len(blankWord)):
+            print('You must enter a guess that is the same length as the keyword!')
+        else:
+            print('Good choice!')
+            valid_letter = True
+        print()
+
+    # If the words match, give it to the player; otherwise, return false
+    if (choice.lower() == roundWord.lower()):
+        for i in range(len(roundWord)):
+            blankWord[i] = roundWord[i]
+        print(f'Your guess of "{choice}" is correct!')
+    else:
+        print(f'Your guess of "{choice}" is incorrect.')
+
+    # Pause the line so person can digest what just happened
+    input("  OK? ")
+    print()
     
-    return False
-    
+    # Always return False because guessing the word should always end turn
+    return False  
     
 def wofTurn(playerNum):
 
@@ -344,12 +369,7 @@ def wofTurn(playerNum):
     global consonants
     global roundUsedLetters
 
-    # take in a player number. 
-    # use the string.format method to output your status for the round
-    # and Ask to (s)pin the wheel, (b)uy vowel, or G(uess) the word using
-    # Keep doing all turn activity for a player until they guess wrong
-    # Do all turn related activity including update roundtotal 
-    
+    # Keep going with player until their is losing condition for round
     stillinTurn = True
     while stillinTurn:
 
@@ -395,16 +415,20 @@ def wofTurn(playerNum):
         elif(choice.upper() == "G"):
             stillinTurn = guessWord(playerNum)
         else:
-            print("!! Not a correct option !!")
-
+            print(f'{choice} is not a valid selection!')
         print()        
     
     # Check to see if round is over; if over, return False; otherwise, return True
-    if (roundWord == ''.join(blankWord)):
+    roundOver = True
+    for i in range(len(blankWord)):
+        if (blankWord[i].lower() != roundWord[i].lower()):
+            roundOver = False
+    if (roundOver):
+        # Give the winning player their winnings
+        players[playerNum]['gametotal'] += players[playerNum]['roundtotal']
         return False
     else:
         return True  
-
 
 def wofRound():
 
@@ -414,24 +438,32 @@ def wofRound():
     global blankWord
     global roundstatus
 
-     # Get round set up
+    # Get round set up
     i_player = wofRoundSetup()
+
+    # Debug only: print the word
+    print(f'KEYWORD: {roundWord}')
     
     # Keep the roudn going until a solution is reached
     round_going = True
     while (round_going):
 
         # Begin the current players turn
-        wofTurn(i_player)
+        round_going = wofTurn(i_player)
 
-        # Update so the next person gets to go
-        i_player += 1
-        if (i_player == len(players)):
-            i_player = 0
+        # Update so the next person gets to go if round is still going
+        if (round_going):
+            i_player += 1
+            if (i_player == len(players)):
+                i_player = 0
     
     # TO DO: Print status of round
-    
-    # Print roundstatus with string.format, tell people the state of the round as you are leaving a round.
+
+    # Pause the line so person can digest what just happened
+    input("  OK? ")
+    print()
+
+
 
 def wofFinalRound():
     global roundWord
