@@ -1,0 +1,14 @@
+[.circle] System calls for the game be setup using "gameSetup()"
+  Print welcome message
+    Read in cleaned usable words using "readDictionaryFile()"
+      Save contents to "dictionary" variable as list
+        Read in turn text file using "readTurnTxtFile()
+          Save contents to "turntext" variables as string
+            Read in cleaned wheel values using "readWheelTxtFile()"
+              Save contents to "wheellist" variable as list
+                Get and save player's names using "getPlayerInfo()"
+                  Read in round status text file using "readRoundStatusTxtFile()"
+                    Save contents to "roundstatus" variable as string
+                      Read in final round text file using "readFinalRoundTxtFile()"
+                        Save contents to "finalroundtext" variable as string
+                          [.circle] Game setup complete

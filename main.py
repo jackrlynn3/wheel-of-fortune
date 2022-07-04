@@ -8,7 +8,6 @@ from config import vowelcost
 from config import roundstatusloc
 from config import finalprize
 from config import finalRoundTextLoc
-
 import random
 
 # Global Variables

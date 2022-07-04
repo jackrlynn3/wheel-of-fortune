@@ -1,0 +1,8 @@
+[.circle] System calls instance of game using "main()"
+  Files are imported, variables are set, and player names are input using "gameSetup()"
+      [.diamond] [question] What round is this?
+        1st or 2nd: Call a normal round through "wofRound()"
+          Iterate round
+            (question)
+        3rd: Call a final round through "wofFinalRound()"
+          [.circle] System ends the game instance
