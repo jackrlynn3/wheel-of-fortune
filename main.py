@@ -69,7 +69,14 @@ def readRoundStatusTxtFile():
 
 def readWheelTxtFile():
     global wheellist
+
     # read the Wheel name from input using the Config wheelloc file location 
+    f = open(wheeltextloc, 'r')
+    
+    # Clean contents
+    wheellist = f.readlines()
+    for i in range(len(wheellist)):
+        wheellist[i] = wheellist[i].strip()
 
 # getPlayerInfo: command line prompt will inquiry repetitiously until three valid, unique names are entered
 def getPlayerInfo():
@@ -165,7 +172,7 @@ def wofRoundSetup():
         players[i]["roundtotal"] = 0
 
     # Return the starting player number using random integer generator
-    initPlayer = random.randint(0, len(players))
+    initPlayer = random.randint(0, len(players)-1)
 
     # Use getWord function to retrieve the word and the underscore word (blankWord)
     roundWord, blankWord = getWord()
@@ -179,13 +186,69 @@ def spinWheel(playerNum):
     global wheellist
     global players
     global vowels
+    global roundUsedLetters
 
     # Get random value for wheellist
-    # Check for bankrupcy, and take action.
-    # Check for loose turn
-    # Get amount from wheel if not loose turn or bankruptcy
+    wheel_val = wheellist[random.randint(0, len(wheellist)-1)]
+
+    # If 'bankrupt', end turn immediately and zero out player's round total
+    if (wheel_val == "BANKRUPT"):
+        players[playerNum]['roundtotal'] = 0
+        print(f'You landed on the BANKRUPT space; tough luck!')
+        # Pause the line so person can digest what just happened
+        input("  OK? ")
+        print()
+        return False
+
+    # If 'lose a turn', end turn immediately
+    if (wheel_val == "LOSE A TURN"):
+        print(f'You landed on the LOSE A TURN space; tough luck!')
+        # Pause the line so person can digest what just happened
+        input("  OK? ")
+        print()
+        return False
+
+    # Convert wheel amount to integer equivalent
+    wheel_val = int(wheel_val)
+    print(f'You landed on the ${wheel_val} space; guess a letter')
+    print(f'  Guessed letters: {roundUsedLetters}\n')
+
     # Ask user for letter guess
+    valid_letter = False
+    choice = ''
+    while (not valid_letter):
+        choice = str(input('  Guess: ')).lower()
+        if (len(choice) != 1):
+            print('You must enter a character!')
+        elif (choice in roundUsedLetters):
+            print('You must guess letters that haven\'t already been guessed!')
+        elif (choice in vowels):
+            print('You must input a consonant and not a vowel!')
+        elif (not choice.isalpha()):
+            print('You must input a letter!')
+        else:
+            print('Good choice!')
+            valid_letter = True
+        print()
+    
     # Use guessletter function to see if guess is in word, and return count
+    stillinTurn, count = guessletter(choice, playerNum)
+
+    # Change player score
+    players[playerNum]['roundtotal'] += count * wheel_val
+
+    # Print results of guess
+    if (count == 0):
+        print(f'There are no {choice}\'s in: {blankWord}\n')
+    elif (count == 1):
+        print(f'There is 1 {choice} in: {blankWord}\n')
+    else:
+        print(f'There are {count} {choice}\'s in: {blankWord}\n')
+
+    # Pause the line so person can digest what just happened
+    input("  OK? ")
+    print()
+
     # Change player round total if they guess right.     
     return stillinTurn
 
@@ -193,12 +256,23 @@ def spinWheel(playerNum):
 def guessletter(letter, playerNum): 
     global players
     global blankWord
-    # parameters:  take in a letter guess and player number
-    # Change position of found letter in blankWord to the letter instead of underscore 
-    # return goodGuess= true if it was a correct guess
-    # return count of letters in word. 
-    # ensure letter is a consonate.
-    
+    global roundWord
+    global roundUsedLetters
+
+    # Initialize count and goodGuess variables
+    count = 0
+    goodGuess = False
+
+    # Change position of found letter in blankWord to the letter instead of underscore
+    for i in range(len(blankWord)):
+        if (letter == roundWord[i]):
+            blankWord[i] = roundWord[i]
+            count += 1
+            goodGuess = True
+
+    roundUsedLetters.append(letter)
+
+    # Return if the letter is in the word and the count
     return goodGuess, count
 
 def buyVowel(playerNum):
@@ -246,6 +320,8 @@ def wofTurn(playerNum):
     stillinTurn = True
     while stillinTurn:
 
+        print("PLAYER NUM: "+str(playerNum))
+
         # Get round status
         print(turntext.format(format_word=' '.join(blankWord), p1_name=players[0]['name'],
             p1_money=players[0]['roundtotal'], p2_name=players[1]['name'],
@@ -278,6 +354,7 @@ def wofTurn(playerNum):
         
         # Get user input S for spin, B for buy a vowel, G for guess the word
         choice = input('Selection: ')
+        print()
         if(choice.strip().upper() == "S" and can_guess_consonant):
             stillinTurn = spinWheel(playerNum)
         elif(choice.strip().upper() == "B" and can_buy_vowel):
@@ -285,7 +362,6 @@ def wofTurn(playerNum):
         elif(choice.upper() == "G"):
             stillinTurn = guessWord(playerNum)
         else:
-            print()
             print("!! Not a correct option !!")
 
         print()        
