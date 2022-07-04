@@ -1,2 +1,11 @@
-Add your text here and use string.format or string.format_map
-with {variables} to template strings
+<>-<>-<>-<>-<>-<>-<>-<>-<>-<>-<>-<>-<>-<>-<>-<>-<>-<>-<>-<>
+
+Congratulations, {winner}! You have the highest pot,
+at {winnings}!
+
+You now have the chance to win an extra {prize_money} if you
+can guess the final keyword!
+
+You will be given 'R','S','T','L','N', and 'E' in the word.
+You will be then get to choose three other consonants and
+one vowel.

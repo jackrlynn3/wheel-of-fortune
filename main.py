@@ -60,8 +60,15 @@ def readTurnTxtFile():
     turntext = f.read()
         
 def readFinalRoundTxtFile():
+
+    # Load in finalroundtext variable
     global finalroundtext   
-    #read in turn intial turn status "message" from file
+
+    # Load in corresponding text file (data/turntext.txt)
+    f = open(finalRoundTextLoc, 'r')
+
+    # Save string as global variable
+    finalroundtext = f.read()
 
 def readRoundStatusTxtFile():
     global roundstatus
@@ -71,7 +78,6 @@ def readRoundStatusTxtFile():
 
     # Save string as turntext variable
     roundstatus = f.read()
-
 
 def readWheelTxtFile():
     global wheellist
@@ -467,9 +473,9 @@ def wofRound():
             # Print status of round
             print(roundstatus.format(keyword=roundWord,
                 winner=players[i_player]['name'], winnings='$'+str(players[i_player]['roundtotal']),
-                p1_name=players[0]['name'], p1_money=players[0]['roundtotal'],
-                p2_name=players[1]['name'], p2_money=players[1]['roundtotal'],
-                p3_name=players[2]['name'], p3_money=players[2]['roundtotal']))
+                p1_name=players[0]['name'], p1_money=players[0]['gametotal'],
+                p2_name=players[1]['name'], p2_money=players[1]['gametotal'],
+                p3_name=players[2]['name'], p3_money=players[2]['gametotal']))
 
             # Pause the line so person can digest what just happened
             input("  OK? ")
@@ -482,8 +488,17 @@ def wofFinalRound():
     winplayer = 0
     amount = 0
     
-    # Find highest gametotal player.  They are playing.
-    # Print out instructions for that player and who the player is.
+    # Determine who is playing the final round
+    i_winner = 0
+    for i in range(1, len(players)):
+        if (players[i]['gametotal'] > players[i_winner]['gametotal']):
+            i_winner = i
+
+    # Print out instructions for that player and who the player is
+    print(finalroundtext)
+    print(finalroundtext.format(winner=players[i_winner]['name'], winnings='$'+str(players[i_winner]['gametotal']),
+        prize_money='$'+str(finalprize)))
+
     # Use the getWord function to reset the roundWord and the blankWord ( word with the underscores)
     # Use the guessletter function to check for {'R','S','T','L','N','E'}
     # Print out the current blankWord with whats in it after applying {'R','S','T','L','N','E'}
@@ -505,6 +520,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-    
-    
-

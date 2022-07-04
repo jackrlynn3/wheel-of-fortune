@@ -4,8 +4,8 @@
 ---------
 {format_word}
 
- GAME STATS
-------------
+ ROUND STATS
+-------------
 {p1_name}: ${p1_money}
 {p2_name}: ${p2_money}
 {p3_name}: ${p3_money}
