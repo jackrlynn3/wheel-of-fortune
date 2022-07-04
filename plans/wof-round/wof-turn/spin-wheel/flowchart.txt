@@ -1,0 +1,18 @@
+[.circle] Player requests to spin wheel using "spinWheel()"
+  Select a random wedge from "wheellist" using "random"
+    [.diamond] Is the random wedge the BANKRUPT?
+      Yes: Zero out that player's round value
+        [.circle] Return False to end player's turn
+      No: [.diamond] Is the random wedge the LOSE A TURN?
+        Yes: [.circle] Return False to end player's turn
+        No: Convert random wedge to integer
+          [prompt] Prompt user to guess a character
+            [.diamond] Is the input a consonant?
+              No: [error] Show error message
+                (prompt)
+              Yes: Has the consonant been used before?
+                Yes: (error)
+                No: See if letter is in word using "guessletter()"
+                  Update player's score for round
+                    Print data to show player if the letter is in word
+                      [.circle] Return whether the player's turn is still going

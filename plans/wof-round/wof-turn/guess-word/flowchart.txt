@@ -1,0 +1,12 @@
+[.circle] Player requests to guess word using "guessWord()"
+  Show player what letters have already been guessed
+    [input] Request player to input guess
+      [.diamond] Is the guess the same character length as keyword?
+        No: Show error
+          (input)
+        Yes: [.diamond] Does the guess match the keyword?
+          No: Show user that their guess is incorrect
+            (return)
+          Yes: Show user that their guess is correct
+            Update blank word to match keyword
+              [return] Return False

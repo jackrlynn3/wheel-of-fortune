@@ -1,0 +1,11 @@
+[.circle] Player requests to buy vowel using "buyVowel()"
+  Show what vowels have been guessed already
+    Prompt user to guess a vowel
+      [.diamond] Is the guess a vowel?
+        No: [error] Show error
+        Yes: [.diamond] Has the vowel been guessed already?
+          Yes: (error)
+          No: Check if in word using "guessLetter()"
+            Reduce cost of buying vowel from player's round score
+              Print results of buying vowel
+                [.circle] Return True if the person's turn is still going; False otherwise
