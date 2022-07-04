@@ -1,0 +1,8 @@
+[.circle] Game requests a new round to start using "wofRound()"
+  Game is set up using "wofRoundSetup()"
+    [turn] Start a new player turn using 'wofTurn()' with player index
+      [.diamond] Is the round still going?
+        True: Increment the player index
+          (turn)
+        False: Print round is over message
+          [.circle] Round is complete

@@ -1,0 +1,11 @@
+[.circle] Request to check if letter is in word using "guessletter()"
+  Initialize count and in-word boolean
+    [.diamond] [while] Is this the last letter?
+      No: [.diamond] Does the letter match the that character of the keyword?
+        Yes: Count in counter
+          Set in-word boolean to True
+            (increment)
+        No: [increment] Increment letter
+          (while)
+      Yes: Add guessed letter to "roundUsedLetters"
+        [.circle] Return in-word boolean and count

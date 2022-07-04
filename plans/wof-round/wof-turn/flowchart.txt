@@ -1,0 +1,28 @@
+[.circle] Player's round starts using "wofTurn()"
+  [.diamond] [stillgoing] Is the player still playing this turn?
+    Yes: [.diamond] Does the player have enough money to buy a vowel?
+      Yes: Show buy vowel message
+        (vowels)
+      No: [.diamond] [vowels] Are there any consonants left to guess?
+        Yes: Show spin wheel message
+          (consonants)
+        No: [consonants] Show guess word message
+          [.diamond] [whatnext] What does the player want to do next?
+            Spin the wheel:
+              [.diamond] Can player guess a consonant?
+                No: (error)
+                Yes: Run "spinWheel()
+                  [tralse] Function returns True or False
+                    (stillgoing)
+            Buy a vowel: [.diamond] Can the player buy a vowel?
+                No: [error] Show error message
+                  (whatnext)
+                Yes: Run "buyVowel()
+                  (tralse)
+            Guess the keyword: Run "guessWord"
+                Return False to end turn
+                  (stillgoing)
+    No: [.diamond] Does the blank word have all of its letters filled?
+      Yes: Assign winning player their round winnings
+        [.circle] Return False for round is over
+      No: [.circle] Return True for round is still going, to allow next player's turn
