@@ -234,7 +234,7 @@ def spinWheel(playerNum):
     global roundUsedLetters
 
     # Get random value for wheellist
-    wheel_val = wheellist[random.randint(0, len(wheellist))]
+    wheel_val = wheellist[random.randint(0, len(wheellist)-1)]
 
     # If 'bankrupt', end turn immediately and zero out player's round total
     if (wheel_val == "BANKRUPT"):
@@ -580,6 +580,7 @@ def wofFinalRound():
                 print('You must input a letter!')
             else:
                 guesses.append(choice)
+                guessletter(choice)
             print()
 
         # Get the only vowel
@@ -591,6 +592,7 @@ def wofFinalRound():
                 print('You must guess letters that haven\'t already been guessed!')
             elif (choice in vowels):
                 guesses.append(choice)
+                guessletter(choice)
             else:
                 print('You must input a vowel!')
             print()
@@ -598,10 +600,6 @@ def wofFinalRound():
         # End the letter inputs
         else:
             all_guesses_in = True
-
-    # Guess the letters
-    for letter in guesses:
-        guessletter(letter)
 
     # Print out the current blankWord
     print(f'Your updated keyword after your guesses {guesses}: {(" ".join(blankWord))}\n')
