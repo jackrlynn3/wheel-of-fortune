@@ -54,7 +54,7 @@ def readTurnTxtFile():
     global turntext   
 
     # Load in corresponding text file (data/turntext.txt)
-    f = open('data/turntext.txt', 'r')
+    f = open(turntextloc, 'r')
 
     # Save string as turntext variable
     turntext = f.read()
@@ -65,7 +65,13 @@ def readFinalRoundTxtFile():
 
 def readRoundStatusTxtFile():
     global roundstatus
-    # read the round status  the Config roundstatusloc file location 
+
+    # Load in corresponding text file (data/turntext.txt)
+    f = open(roundstatusloc, 'r')
+
+    # Save string as turntext variable
+    roundstatus = f.read()
+
 
 def readWheelTxtFile():
     global wheellist
@@ -456,14 +462,18 @@ def wofRound():
             i_player += 1
             if (i_player == len(players)):
                 i_player = 0
-    
-    # TO DO: Print status of round
+        else:
+            
+            # Print status of round
+            print(roundstatus.format(keyword=roundWord,
+                winner=players[i_player]['name'], winnings='$'+str(players[i_player]['roundtotal']),
+                p1_name=players[0]['name'], p1_money=players[0]['roundtotal'],
+                p2_name=players[1]['name'], p2_money=players[1]['roundtotal'],
+                p3_name=players[2]['name'], p3_money=players[2]['roundtotal']))
 
-    # Pause the line so person can digest what just happened
-    input("  OK? ")
-    print()
-
-
+            # Pause the line so person can digest what just happened
+            input("  OK? ")
+            print()
 
 def wofFinalRound():
     global roundWord

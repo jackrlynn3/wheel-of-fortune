@@ -1,2 +1,11 @@
-Add your text here and use string.format or string.format_map
-with {variables} to template strings
+<>-<>-<>-<>-<>-<>-<>-<>-<>-<>-<>-<>-<>-<>-<>-<>-<>-<>-<>-<>
+
+The round is is over! The keyword is {keyword}.
+
+The winner is {winner}, who won {winnings}!
+
+ GAME STATS
+------------
+{p1_name}: ${p1_money}
+{p2_name}: ${p2_money}
+{p3_name}: ${p3_money}
