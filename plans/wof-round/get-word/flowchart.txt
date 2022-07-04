@@ -1,0 +1,8 @@
+[.circle] Game requests a new keyword through "getWord()"
+  [while] Get a random keyword from "dictionary"
+    [.diamond] Has the keyword already been used?
+      Yes: (while)
+      No: Set round word to selected keyword
+        Add keyword to used words list
+          Create blank version of word
+            [.circle] Return keyword and blank version

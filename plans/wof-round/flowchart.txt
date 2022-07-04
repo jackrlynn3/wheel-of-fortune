@@ -1,0 +1,6 @@
+[.circle] Round calls "wofRoundSetup()"
+  Reset all of the players' round scores in "Players"
+    Choose a random player to go first using "random"
+      Get a new keyword for the round using "getWord()"
+        Reset the list of used letters in "roundUsedLetters"
+          [.circle] Return the starting player's index
