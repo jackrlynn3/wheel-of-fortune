@@ -8,7 +8,7 @@ Wheel of Fortune is an iconic American game show in which players guess letters 
 
 **Prerequisite:** Requires Python 3.8 or later.
 
-**Step 1:** Download the Git repository from [here](https://github.com/jackrlynn3/word-guessing-game).
+**Step 1:** Download the Git repository from [here](https://github.com/jackrlynn3/wheel-of-fortune).
 
 **Step 2:** Open your Terminal window or your operating system's equivalent command line.
 
