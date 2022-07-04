@@ -189,7 +189,7 @@ def spinWheel(playerNum):
     global roundUsedLetters
 
     # Get random value for wheellist
-    wheel_val = wheellist[random.randint(0, len(wheellist)-1)]
+    wheel_val = wheellist[random.randint(0, len(wheellist))]
 
     # If 'bankrupt', end turn immediately and zero out player's round total
     if (wheel_val == "BANKRUPT"):
@@ -252,7 +252,6 @@ def spinWheel(playerNum):
     # Change player round total if they guess right.     
     return stillinTurn
 
-
 def guessletter(letter, playerNum): 
     global players
     global blankWord
@@ -279,13 +278,47 @@ def buyVowel(playerNum):
     global players
     global vowels
     
-    # Take in a player number
-    # Ensure player has 250 for buying a vowelcost
-    # Use guessLetter function to see if the letter is in the file
-    # Ensure letter is a vowel
-    # If letter is in the file let goodGuess = True
-    
-    return goodGuess      
+    # Get a vowel to buy
+    # Convert wheel amount to integer equivalent
+    print(f'You want to buy a vowel')
+    print(f'  Guessed vowels: {list(set(roundUsedLetters) & set(vowels))}\n')
+
+    # Ask user for letter guess
+    valid_letter = False
+    choice = ''
+    while (not valid_letter):
+        choice = str(input('  Guess: ')).lower()
+        if (len(choice) != 1):
+            print('You must enter a character!')
+        elif (choice in roundUsedLetters):
+            print('You must guess letters that haven\'t already been guessed!')
+        elif (choice in vowels):
+            print('Good choice!')
+            valid_letter = True
+        else:
+            print('You must input a vowel!')
+        print()
+
+    # Use guessletter function to see if guess is in word, and return count
+    stillinTurn, count = guessletter(choice, playerNum)
+
+    # Change player score
+    players[playerNum]['roundtotal'] -= vowelcost
+
+    # Print results of guess
+    if (count == 0):
+        print(f'There are no {choice.upper()}\'s in: {blankWord}\n')
+    elif (count == 1):
+        print(f'There is 1 {choice.upper()} in: {blankWord}\n')
+    else:
+        print(f'There are {count} {choice.upper()}\'s in: {blankWord}\n')
+
+    # Pause the line so person can digest what just happened
+    input("  OK? ")
+    print()
+
+    # Change player round total if they guess right.     
+    return stillinTurn      
         
 def guessWord(playerNum):
     global players
