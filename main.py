@@ -1,3 +1,5 @@
+# Imports
+
 from config import dictionaryloc
 from config import turntextloc
 from config import wheeltextloc
@@ -63,7 +65,9 @@ def readTurnTxtFile():
 
     # Save string as turntext variable
     turntext = f.read()
-        
+
+# readFinalRoundTxtFile: reads in file saved as data/finalround.txt as string and saves
+#   it under finalroundtext global variable        
 def readFinalRoundTxtFile():
 
     # Load in finalroundtext variable
@@ -75,7 +79,11 @@ def readFinalRoundTxtFile():
     # Save string as global variable
     finalroundtext = f.read()
 
+# readRoundStatusTxtFile: reads in file saved as data/roundstatus.txt as string and saves
+#   it under roundstatus global variable  
 def readRoundStatusTxtFile():
+
+    # Load in roundstatus variable
     global roundstatus
 
     # Load in corresponding text file (data/turntext.txt)
@@ -84,7 +92,11 @@ def readRoundStatusTxtFile():
     # Save string as turntext variable
     roundstatus = f.read()
 
+# readWheelTxtFile: reads in file saved as data/wheeldata.txt as string and saves
+#   it under wheellist global variable  
 def readWheelTxtFile():
+
+    # Load in wheellist variable
     global wheellist
 
     # read the Wheel name from input using the Config wheelloc file location 
