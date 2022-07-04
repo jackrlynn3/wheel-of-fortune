@@ -1,0 +1,28 @@
+[.circle] Game requests to run final round "wofFinalRound()"
+  Determine who has the highest total score
+    Set the highest scoring person to play final round
+      Get a final keyword using "getWord()"
+        Guess 'r', 's', 't', 'l', 'n', and 'e' using "guessletter()
+          [input] Request letter input from user
+            [.diamond] What input number is it?
+              1 through 3: [.diamond] Is it a consonant?
+                No: Reject input
+                  (input)
+                Yes: [passed] Pass guessed letter through "getWord()"
+                  Save to guessed letters
+                    (input)
+              4:[.diamond] Is it a vowel?
+                No: Reject input
+                  (input)
+                Yes: (passed)
+              Beyond 4: End loop
+                Print updated blank keyword show
+                  [final_input] Request player input of final word
+                    [.diamond] Is it the same length as the keyword?
+                      No: Get a new input
+                        (final_input)
+                      Yes: [.diamond] Does the input match the keyword?
+                        Yes: Add prize money to player's total
+                          (show)
+                        No: [show] Show final prize total to winner
+                          [.circle] Close game
