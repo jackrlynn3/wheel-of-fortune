@@ -476,13 +476,23 @@ def wofTurn(playerNum):
             stillinTurn = guessWord()
         else:
             print(f'{choice} is not a valid selection!')
-        print()        
+        print()
+
+        # UPDATE: Check to see if the round needs to immediately ended because all values are filled
+        roundOver = True
+        for i in range(len(blankWord)):
+            if (blankWord[i].lower() != roundWord[i].lower()):
+                roundOver = False
+        if (roundOver):
+            players[playerNum]['gametotal'] += players[playerNum]['roundtotal']
+            return False
     
     # Check to see if round is over; if over, return False; otherwise, return True
     roundOver = True
     for i in range(len(blankWord)):
         if (blankWord[i].lower() != roundWord[i].lower()):
             roundOver = False
+
     if (roundOver):
         # Give the winning player their winnings
         players[playerNum]['gametotal'] += players[playerNum]['roundtotal']
@@ -503,7 +513,7 @@ def wofRound():
     i_player = wofRoundSetup()
 
     # Debug only: print the word
-    # print(f'KEYWORD: {roundWord}')
+    print(f'KEYWORD: {roundWord}')
     
     # Keep the roudn going until a solution is reached
     round_going = True
